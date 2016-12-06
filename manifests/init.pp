@@ -37,7 +37,7 @@ class dirtycow (
                         |-UMESSAGE
 
   if $::kernel == 'Linux' {
-    message = $::cve_2016_5195 ? {
+    $message = $::cve_2016_5195 ? {
       'vulnerable' => $vulnerable_message,
       'unknown'    => $unknown_message,
       default      => undef,
