@@ -1,7 +1,7 @@
 require 'puppet/util/package'
 
 Facter.add(:cve_2016_5195) do
-  confine :kernel => 'linux'
+  confine :kernel => 'Linux'
 
   # Get facts
   kernel_major_version = Facter.value('kernelmajversion')
