@@ -22,21 +22,24 @@ class dirtycow (
     fail($bad_behavior)
   }
 
+  $vulnurable_message = @(VMESSAGE)
+                        This system is vulnerable to CVE-2016-5195, also knwon as "Dirty COW".
+                        See http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5195
+                        and https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-5195
+                        for further information.
+                        |-VMESSAGE
+  $unknown_message    = @(UMESSAGE)
+                        It could not be determined if this system is vulnerable to CVE-2016-5195,
+                        also known as "Dirty COW". Manual intervention is requested.
+                        See http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5195
+                        and https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-5195
+                        for further information.
+                        |-UMESSAGE
+
   if $::kernel == 'Linux' {
     message = $::cve_2016_5195 ? {
-      'vulnerable' => @(VMESSAGE)
-                      This system is vulnerable to CVE-2016-5195, also knwon as "Dirty COW".
-                      See http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5195
-                      and https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-5195
-                      for further information.
-                      |-VMESSAGE,
-      'unknown'    => @(UMESSAGE)
-                      It could not be determined if this system is vulnerable to CVE-2016-5195,
-                      also known as "Dirty COW". Manual intervention is requested.
-                      See http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5195
-                      and https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-5195
-                      for further information.
-                      |-UMESSAGE,
+      'vulnerable' => $vulnerable_message,
+      'unknown'    => $unknown_message,
       default      => undef,
     }
     if $message {
