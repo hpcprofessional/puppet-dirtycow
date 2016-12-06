@@ -74,7 +74,7 @@ desired, the adminsitrator can set this class to fail the catalog compilation.
 This is a parameterized class. The available parameters are shown here:
 
 | Parameter       | Type | Values             | Default  |
-| +-------------- | +--+ | +----------------- | +------+ |
+| :-------------- | :--: | :----------------- | :------: |
 | notify_behavior | Enum | `notify` or `fail` | `notify` |
 
 ### Facts
@@ -84,7 +84,7 @@ This is a parameterized class. The available parameters are shown here:
 This fact will have one of two several values based on the system:
 
 | Value            | Meaning                                         |
-| +--------------- | +---------------------------------------------- |
+| :--------------- | :---------------------------------------------- |
 | `vulnerable`     | The system is vulnerable and should be patched. |
 | `not vulnerable` | The system is not vulnerable.                   |
 | `unknown`        | The state could not be determined. See below.   |
