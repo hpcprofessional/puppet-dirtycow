@@ -59,6 +59,7 @@ syntax:
 class { 'dirtycow':
   notify_behavior => 'fail',
 }
+```
 
 ## Reference
 
