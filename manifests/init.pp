@@ -38,7 +38,7 @@ class dirtycow (
 
   if $::kernel == 'Linux' {
     $message = $::cve_2016_5195 ? {
-      'vulnerable' => $vulnerable_message,
+      'vulnerable' => $vulnurable_message,
       'unknown'    => $unknown_message,
       default      => undef,
     }
@@ -48,7 +48,7 @@ class dirtycow (
                     fail($message)
                   }
          'notify': {
-                    notice { 'CVE-2016-5195':
+                    notify { 'CVE-2016-5195':
                       message => $message,
                     }
                   }
