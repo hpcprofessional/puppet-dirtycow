@@ -13,48 +13,92 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves. This is your 30 second elevator pitch for your module. Consider including OS/Puppet version it works with.       
+This module is to help the system administrator identify machines that are
+currently susceptible to
+[CVE-2016-5195](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5195),
+commonly known as "Dirty COW".
+
+For more information on this security threat, view the [Vulnerability Summary
+for CVE-2016-5195](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-5195).
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology the module integrates with and what that integration enables. This section should answer the questions: "What does this module *do*?" and "Why would I use it?"
+This module creates a new fact named `cve_2016_5195`, that can be used to
+determine if the system is vulnerable.
 
-If your module has a range of functionality (installation, configuration, management, etc.) this is the time to mention it.
+The administrator can determine how this information is handled during a
+catalog compilation.
 
 ## Setup
 
 ### What dirtycow affects
 
-* A list of files, packages, services, or operations that the module will alter, impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form. 
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, etc.), mention it here. 
+* Creates a new ruby-based fact named `cve_2016_5195`.
 
 ### Beginning with dirtycow
 
-The very basic steps needed for a user to get the module up and running. 
+Install the module:
 
-If your most recent release breaks compatibility or requires particular steps for upgrading, you may wish to include an additional section here: Upgrading (For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+```
+puppet module install hpcprofessional/dirtycow
+```
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing the fancy stuff with your module here. 
+After the module is installed, its reporting is activated simply by including
+the class.
+
+```
+include dirtycow
+```
+
+Alternatively, parameters can be passed to the class by using the resource
+syntax:
+
+```
+class { 'dirtycow':
+  notify_behavior => 'fail',
+}
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module. This section should include all of the under-the-hood workings of your module so people know what the module is touching on their system but don't need to mess with things. (We are working on automating this section!)
+### Classes
+
+`dirtycow`
+
+This class makes use of the `cve_2016_5195` fact to notify the administrator.
+The default behavior is simply to create a notification on the run. However, if
+desired, the adminsitrator can set this class to fail the catalog compilation.
+
+This is a parameterized class. The available parameters are shown here:
+
+| Parameter       | Type | Values             | Default  |
+| +-------------- | +--+ | +----------------- | +------+ |
+| notify_behavior | Enum | `notify` or `fail` | `notify` |
+
+### Facts
+
+`cve_2016_5195`
+
+This fact will have one of two several values based on the system:
+
+| Value            | Meaning                                         |
+| +--------------- | +---------------------------------------------- |
+| `vulnerable`     | The system is vulnerable and should be patched. |
+| `not vulnerable` | The system is not vulnerable.                   |
+| `unknown`        | The state could not be determined. See below.   |
+
+The final value, `unknown`, is returned when the fact could not determine
+whether or not the system is affected. Generally, this is caused by the fact
+being run on an unsupported operating system.
+
+While this fact is automatically used by the `dirtycow` class, intrepid
+administrators can find additional uses for it (e.g., using it to upgrade the
+kernel on all affected machines via MCollective).
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You may also add any additional sections you feel are necessary or important to include here. Please use the `## ` header. 
+See the [Contribution Guidelines](CONTRIBUTING.md) to find out how you can help.
