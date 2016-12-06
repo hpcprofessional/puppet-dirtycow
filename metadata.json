@@ -1,0 +1,33 @@
+{
+  "name": "hpcprofessional-dirtycow",
+  "version": "0.1.0",
+  "author": "hpcprofessional",
+  "summary": "A puppet module to identify/remediate the Linux dirty COW kernel issue.",
+  "license": "Apache-2.0",
+  "source": "https://github.com/hpcprofessional/puppet-dirtycow",
+  "project_page": "https://github.com/hpcprofessional/puppet-dirtycow",
+  "issues_url": "https://github.com/hpcprofessional/puppet-dirtycow/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 1.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    }
+  ]
+}
